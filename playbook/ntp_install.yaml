@@ -1,0 +1,11 @@
+---
+- hosts: nodes
+  tasks:
+    - name: 安装ntp
+      yum: pkg=ntp  state=present
+
+    - name: 配置ntp
+      template: src=../config/ntp.conf  dest=/etc/ntp.conf
+
+    - name: 启动ntp
+      service: name=ntpd  state=started

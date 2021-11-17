@@ -1,0 +1,8 @@
+---
+- hosts: nodes
+  tasks:
+    - name: 停止ntp
+      service: name=ntpd  state=stopped
+
+    - name: 卸载ntp
+      yum: pkg=ntp  state=absent
