@@ -1,11 +1,18 @@
 ---
 - hosts: nodes
   tasks:
+    - name: 查询ntp是否安装
+      shell: rpm -qa | grep ntp
+      register: is_install
+
     - name: 安装ntp
       yum: pkg=ntp  state=present
+      when: is_install != ''
 
     - name: 配置ntp
       template: src=../config/ntp.conf  dest=/etc/ntp.conf
+      when: is_install != ''
 
     - name: 启动ntp
       service: name=ntpd  state=started
+      when: is_install != ''
